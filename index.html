@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وقفه</title>
+<title>وقفة</title>
 
 <style>
 body{
 margin:0;
-font-family: 'Tajawal', sans-serif;
+font-family:Tahoma;
 background:#0f172a;
 color:white;
 }
@@ -21,17 +21,21 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-text-align:center;
 }
 
-.enter-btn{
-padding:15px 40px;
-border-radius:30px;
+.landing h1{
+font-size:50px;
+text-decoration:underline;
+}
+
+.enter{
+padding:12px 30px;
+border-radius:25px;
 border:none;
 background:white;
 color:#0f172a;
-font-size:18px;
 cursor:pointer;
+font-weight:bold;
 }
 
 /* الهيدر */
@@ -39,7 +43,7 @@ header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px;
+padding:15px 30px;
 background:#0f172a;
 }
 
@@ -48,26 +52,27 @@ font-size:28px;
 text-decoration:underline;
 }
 
-.cart-icon{
+.cart-btn{
 cursor:pointer;
 font-size:20px;
 }
 
-/* الفئات */
+/* الأقسام */
 .categories{
 display:flex;
 justify-content:center;
-gap:20px;
+gap:15px;
 margin:20px;
 flex-wrap:wrap;
 }
 
-.category{
+.cat{
 background:white;
 color:#0f172a;
 padding:10px 20px;
-border-radius:25px;
+border-radius:50px;
 cursor:pointer;
+font-weight:bold;
 }
 
 /* المنتجات */
@@ -80,15 +85,14 @@ padding:20px;
 
 .product{
 border:2px solid white;
-border-radius:20px;
+border-radius:18px;
 padding:15px;
 text-align:center;
 }
 
 .price{
-color:white;
-font-weight:bold;
 margin:10px 0;
+font-weight:bold;
 }
 
 button{
@@ -103,7 +107,7 @@ cursor:pointer;
 position:fixed;
 top:0;
 left:-100%;
-width:300px;
+width:320px;
 height:100%;
 background:#1e293b;
 padding:20px;
@@ -118,86 +122,85 @@ left:0;
 .cart-item{
 display:flex;
 justify-content:space-between;
-margin-bottom:10px;
+margin:10px 0;
+background:#0f172a;
+padding:8px;
+border-radius:12px;
 }
 
 .total{
-margin-top:20px;
+margin-top:15px;
 font-weight:bold;
 }
 
-.close-cart{
+.close{
 cursor:pointer;
-margin-bottom:15px;
+margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- صفحة الدخول -->
 <div class="landing" id="landing">
-<h1 style="font-size:40px;">وقفه</h1>
-<button class="enter-btn" onclick="enterStore()">دخول المتجر</button>
+<h1>وقفة</h1>
+<button class="enter" onclick="enter()">دخول المتجر</button>
 </div>
 
-<!-- المتجر -->
 <div id="store" style="display:none;">
 
 <header>
-<div class="logo">وقفه</div>
-<div class="cart-icon" onclick="toggleCart()">🛒</div>
+<div class="logo">وقفة</div>
+<div class="cart-btn" onclick="toggleCart()">🛒</div>
 </header>
 
 <div class="categories">
-<div class="category" onclick="showCategory('pens')">الأقلام</div>
-<div class="category" onclick="showCategory('watches')">الساعات</div>
-<div class="category" onclick="showCategory('rings')">الخواتم</div>
-<div class="category" onclick="showCategory('beads')">السبح</div>
+<div class="cat" onclick="show('pens')">الأقلام</div>
+<div class="cat" onclick="show('watches')">الساعات</div>
+<div class="cat" onclick="show('rings')">الخواتم</div>
+<div class="cat" onclick="show('beads')">السبح</div>
 </div>
 
 <div class="products" id="products"></div>
 
 </div>
 
-<!-- السلة -->
 <div class="cart" id="cart">
-<div class="close-cart" onclick="toggleCart()">⬅ رجوع</div>
+<div class="close" onclick="toggleCart()">⬅ رجوع</div>
 <div id="cartItems"></div>
 <div class="total">المجموع: <span id="total">0</span> ريال</div>
 </div>
 
 <script>
-
-let products = {
+let products={
 pens:[
-{name:"كارتير",price:99},
-{name:"مونت بلاك",price:99},
-{name:"جي فنشي",price:99}
+{name:"قلم كارتير",price:99},
+{name:"قلم مونت بلاك",price:99},
+{name:"قلم جي فنشي",price:99}
 ],
 watches:[
-{name:"كاسيو",price:120},
-{name:"كارتير",price:120},
-{name:"روليكس",price:120}
+{name:"ساعة كاسيو",price:120},
+{name:"ساعة كارتير",price:120},
+{name:"ساعة روليكس",price:120}
 ],
 rings:[
 {name:"خاتم رجالي",price:30}
 ],
 beads:[
-{name:"بكلايت",price:45},
-{name:"عظم جمل",price:45},
-{name:"فاتوران",price:45}
+{name:"سبحة بكلايت",price:45},
+{name:"سبحة عظم جمل",price:45},
+{name:"سبحة فاتوران",price:45}
 ]
 };
 
-let cart = [];
+let cart=[];
 
-function enterStore(){
+function enter(){
 document.getElementById("landing").style.display="none";
 document.getElementById("store").style.display="block";
 }
 
-function showCategory(cat){
+function show(cat){
 let container=document.getElementById("products");
 container.innerHTML="";
 products[cat].forEach(p=>{
@@ -205,13 +208,13 @@ container.innerHTML+=`
 <div class="product">
 <h3>${p.name}</h3>
 <div class="price">${p.price} ريال</div>
-<button onclick='addToCart(${JSON.stringify(p)})'>أضف للسلة</button>
+<button onclick='add(${JSON.stringify(p)})'>أضف للسلة</button>
 </div>`;
 });
 }
 
-function addToCart(product){
-cart.push(product);
+function add(p){
+cart.push(p);
 renderCart();
 }
 
@@ -231,15 +234,14 @@ container.innerHTML+=`
 document.getElementById("total").innerText=total;
 }
 
-function removeItem(index){
-cart.splice(index,1);
+function removeItem(i){
+cart.splice(i,1);
 renderCart();
 }
 
 function toggleCart(){
 document.getElementById("cart").classList.toggle("active");
 }
-
 </script>
 
 </body>
