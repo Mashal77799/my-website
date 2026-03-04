@@ -122,9 +122,13 @@ footer{
 </nav>
 
 <div id="cart">
+<button onclick="toggleCart()" style="float:left;background:gold;color:black;border:none;padding:5px 10px;font-weight:bold;cursor:pointer;">✕</button>
 <h3>السلة</h3>
 <ul id="cartItems"></ul>
+<br>
+<button onclick="toggleCart()">⬅ متابعة التسوق</button>
 </div>
+
 
 <!-- الأقلام -->
 <div class="section" id="pens">
