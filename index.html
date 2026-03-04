@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وزارة الداخلية</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: white;
+}
+
+.side-line-left, .side-line-right {
+    position: fixed;
+    top: 0;
+    width: 15px;
+    height: 100%;
+    background: black;
+}
+
+.side-line-left { left: 0; }
+.side-line-right { right: 0; }
+
+header {
+    background: #0d6efd;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+    border: 2px solid #0d6efd;
+    border-radius: 10px;
+}
+
+h2 {
+    color: #0d6efd;
+}
+
+button {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.admin-panel {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px dashed #0d6efd;
+}
+</style>
+</head>
+
+<body>
+
+<div class="side-line-left"></div>
+<div class="side-line-right"></div>
+
+<header>
+<h1>وزارة الداخلية</h1>
+<p>موقع تعليمي تجريبي</p>
+</header>
+
+<section>
+<h2>عدد العسكر</h2>
+<p id="soldiers">50000</p>
+</section>
+
+<section>
+<h2>عدد القيادات</h2>
+<p id="leaders">120</p>
+</section>
+
+<section>
+<h2>الرتب العسكرية</h2>
+<ul>
+<li>جندي</li>
+<li>عريف</li>
+<li>وكيل رقيب</li>
+<li>رقيب</li>
+<li>رقيب أول</li>
+<li>رئيس رقباء</li>
+<li>ملازم</li>
+<li>نقيب</li>
+<li>رائد</li>
+<li>مقدم</li>
+<li>عقيد</li>
+<li>عميد</li>
+<li>لواء</li>
+<li>فريق</li>
+</ul>
+</section>
+
+<section>
+<h2>قوانين الشرطة</h2>
+<ul>
+<li>الالتزام بالأنظمة والقوانين.</li>
+<li>حماية المواطنين والممتلكات.</li>
+<li>التحلي بالأخلاق والانضباط.</li>
+<li>احترام حقوق الإنسان.</li>
+<li>تنفيذ الأوامر الرسمية.</li>
+</ul>
+</section>
+
+<section>
+<button onclick="login()">دخول لوحة التحكم</button>
+
+<div class="admin-panel" id="adminPanel">
+<h2>لوحة التحكم</h2>
+
+<label>تعديل عدد العسكر:</label>
+<input type="number" id="newSoldiers"><br><br>
+
+<label>تعديل عدد القيادات:</label>
+<input type="number" id="newLeaders"><br><br>
+
+<button onclick="updateData()">حفظ التعديلات</button>
+</div>
+</section>
+
+<script>
+function login() {
+    var password = prompt("أدخل الرمز السري:");
+    if (password === "1234") {
+        document.getElementById("adminPanel").style.display = "block";
+        alert("تم الدخول بنجاح");
+    } else {
+        alert("رمز سري غير صحيح");
+    }
+}
+
+function updateData() {
+    var soldiers = document.getElementById("newSoldiers").value;
+    var leaders = document.getElementById("newLeaders").value;
+
+    if (soldiers) {
+        document.getElementById("soldiers").innerText = soldiers;
+    }
+
+    if (leaders) {
+        document.getElementById("leaders").innerText = leaders;
+    }
+
+    alert("تم حفظ التعديلات");
+}
+</script>
+
+</body>
+</html>
