@@ -3,312 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وقفة</title>
+<title>وقفه</title>
 
 <style>
 body{
 margin:0;
-font-family:Tahoma;
-background:#0e1a2b;
+font-family: 'Tajawal', sans-serif;
+background:#0f172a;
 color:white;
 }
 
-/* صفحة البداية */
-#landing{
+/* صفحة الدخول */
+.landing{
 height:100vh;
-background:url("landing.jpg") center/cover no-repeat;
+background:url("IMG_2277.png") center/cover no-repeat;
 display:flex;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 text-align:center;
-position:relative;
 }
 
-#landing::after{
-content:"";
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
-top:0;
-left:0;
-}
-
-#landingContent{
-position:relative;
-z-index:2;
-}
-
-#landing h1{
-font-size:50px;
-border-bottom:3px solid white;
-display:inline-block;
-padding-bottom:10px;
-margin-bottom:25px;
-}
-
-#enterBtn{
-padding:12px 30px;
-border-radius:25px;
+.enter-btn{
+padding:15px 40px;
+border-radius:30px;
 border:none;
 background:white;
-color:#0e1a2b;
-font-weight:bold;
+color:#0f172a;
 font-size:18px;
 cursor:pointer;
 }
 
-/* المتجر */
-#store{display:none;}
-
+/* الهيدر */
 header{
-background:#0b1624;
-padding:15px;
-text-align:center;
-position:relative;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+background:#0f172a;
 }
 
-header h2{
-display:inline-block;
-border-bottom:3px solid white;
-padding-bottom:5px;
+.logo{
+font-size:28px;
+text-decoration:underline;
 }
 
-.cart-btn,.admin-btn{
-position:absolute;
-top:15px;
-background:white;
-color:#0e1a2b;
-border:none;
-padding:8px 15px;
-border-radius:25px;
+.cart-icon{
 cursor:pointer;
-font-weight:bold;
+font-size:20px;
 }
 
-.cart-btn{left:15px;}
-.admin-btn{right:15px;}
-
-nav{
+/* الفئات */
+.categories{
 display:flex;
 justify-content:center;
-gap:15px;
-padding:15px;
-background:#0b1624;
+gap:20px;
+margin:20px;
 flex-wrap:wrap;
 }
 
-nav button{
-border-radius:30px;
-padding:10px 20px;
-border:none;
+.category{
 background:white;
-color:#0e1a2b;
+color:#0f172a;
+padding:10px 20px;
+border-radius:25px;
 cursor:pointer;
-font-weight:bold;
 }
 
-.section{
-display:none;
+/* المنتجات */
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
 padding:20px;
-text-align:center;
 }
 
 .product{
 border:2px solid white;
-border-radius:18px;
+border-radius:20px;
 padding:15px;
-margin:10px;
-display:inline-block;
-width:220px;
-background:#13243a;
+text-align:center;
 }
 
 .price{
-margin:8px 0;
+color:white;
 font-weight:bold;
+margin:10px 0;
 }
 
-.add{
-border-radius:20px;
+button{
 padding:8px 15px;
+border-radius:20px;
 border:none;
-background:white;
-color:#0e1a2b;
 cursor:pointer;
 }
 
 /* السلة */
-#cart{
-display:none;
+.cart{
 position:fixed;
 top:0;
-left:0;
-width:320px;
+left:-100%;
+width:300px;
 height:100%;
-background:#0b1624;
+background:#1e293b;
 padding:20px;
+transition:.3s;
 overflow:auto;
-box-shadow:0 0 15px black;
 }
 
-#cart h3{
-border-bottom:2px solid white;
-padding-bottom:5px;
+.cart.active{
+left:0;
 }
 
-#cart ul{
-list-style:none;
-padding:0;
-}
-
-#cart li{
-background:#13243a;
-margin:8px 0;
-padding:10px;
-border-radius:15px;
+.cart-item{
 display:flex;
 justify-content:space-between;
-align-items:center;
-}
-
-.remove-btn{
-background:red;
-color:white;
-border:none;
-border-radius:50%;
-width:25px;
-height:25px;
-cursor:pointer;
+margin-bottom:10px;
 }
 
 .total{
-margin-top:15px;
+margin-top:20px;
 font-weight:bold;
+}
+
+.close-cart{
+cursor:pointer;
+margin-bottom:15px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="landing">
-<div id="landingContent">
-<h1>وقفة</h1>
-<br>
-<button id="enterBtn" onclick="enterStore()">دخول المتجر</button>
-</div>
+<!-- صفحة الدخول -->
+<div class="landing" id="landing">
+<h1 style="font-size:40px;">وقفه</h1>
+<button class="enter-btn" onclick="enterStore()">دخول المتجر</button>
 </div>
 
-<div id="store">
+<!-- المتجر -->
+<div id="store" style="display:none;">
 
 <header>
-<h2>وقفة</h2>
-<button class="cart-btn" onclick="toggleCart()">السلة</button>
-<button class="admin-btn" onclick="adminLogin()">تحكم</button>
+<div class="logo">وقفه</div>
+<div class="cart-icon" onclick="toggleCart()">🛒</div>
 </header>
 
-<nav>
-<button onclick="showSection('pens')">الأقلام</button>
-<button onclick="showSection('watches')">الساعات</button>
-<button onclick="showSection('rings')">الخواتم</button>
-<button onclick="showSection('beads')">السبح</button>
-</nav>
+<div class="categories">
+<div class="category" onclick="showCategory('pens')">الأقلام</div>
+<div class="category" onclick="showCategory('watches')">الساعات</div>
+<div class="category" onclick="showCategory('rings')">الخواتم</div>
+<div class="category" onclick="showCategory('beads')">السبح</div>
+</div>
 
-<div id="pens" class="section"></div>
-<div id="watches" class="section"></div>
-<div id="rings" class="section"></div>
-<div id="beads" class="section"></div>
+<div class="products" id="products"></div>
 
 </div>
 
-<div id="cart">
-<button onclick="toggleCart()">إغلاق</button>
-<h3>السلة</h3>
-<ul id="cartItems"></ul>
-<div class="total" id="totalPrice">المجموع: 0 ريال</div>
+<!-- السلة -->
+<div class="cart" id="cart">
+<div class="close-cart" onclick="toggleCart()">⬅ رجوع</div>
+<div id="cartItems"></div>
+<div class="total">المجموع: <span id="total">0</span> ريال</div>
 </div>
 
 <script>
-let products=[
-{cat:"pens",name:"قلم كارتير",price:99},
-{cat:"pens",name:"قلم مونت بلاك",price:99},
-{cat:"pens",name:"قلم جي فنشي",price:99},
-{cat:"watches",name:"ساعة كاسيو",price:120},
-{cat:"watches",name:"ساعة كارتير",price:120},
-{cat:"watches",name:"ساعة روليكس",price:120},
-{cat:"rings",name:"خاتم رجالي",price:30},
-{cat:"beads",name:"سبحة بكلايت",price:45},
-{cat:"beads",name:"سبحة عظم جمل",price:45}
-];
 
-let cart=[];
-let total=0;
+let products = {
+pens:[
+{name:"كارتير",price:99},
+{name:"مونت بلاك",price:99},
+{name:"جي فنشي",price:99}
+],
+watches:[
+{name:"كاسيو",price:120},
+{name:"كارتير",price:120},
+{name:"روليكس",price:120}
+],
+rings:[
+{name:"خاتم رجالي",price:30}
+],
+beads:[
+{name:"بكلايت",price:45},
+{name:"عظم جمل",price:45},
+{name:"فاتوران",price:45}
+]
+};
+
+let cart = [];
 
 function enterStore(){
 document.getElementById("landing").style.display="none";
 document.getElementById("store").style.display="block";
-showSection("pens");
-renderProducts();
 }
 
-function renderProducts(){
-["pens","watches","rings","beads"].forEach(cat=>{
-let container=document.getElementById(cat);
+function showCategory(cat){
+let container=document.getElementById("products");
 container.innerHTML="";
-products.filter(p=>p.cat===cat).forEach((p,i)=>{
+products[cat].forEach(p=>{
 container.innerHTML+=`
 <div class="product">
-<h4>${p.name}</h4>
+<h3>${p.name}</h3>
 <div class="price">${p.price} ريال</div>
-<button class="add" onclick="addToCart(${products.indexOf(p)})">أضف للسلة</button>
+<button onclick='addToCart(${JSON.stringify(p)})'>أضف للسلة</button>
 </div>`;
 });
-});
 }
 
-function showSection(id){
-document.querySelectorAll(".section").forEach(s=>s.style.display="none");
-document.getElementById(id).style.display="block";
+function addToCart(product){
+cart.push(product);
+renderCart();
 }
 
-function addToCart(i){
-cart.push(products[i]);
-total+=products[i].price;
-updateCart();
-}
-
-function updateCart(){
-let list=document.getElementById("cartItems");
-list.innerHTML="";
+function renderCart(){
+let container=document.getElementById("cartItems");
+container.innerHTML="";
+let total=0;
 cart.forEach((item,index)=>{
-list.innerHTML+=`
-<li>
-${item.name} - ${item.price}
-<button class="remove-btn" onclick="removeItem(${index})">×</button>
-</li>`;
+total+=item.price;
+container.innerHTML+=`
+<div class="cart-item">
+<span>${item.name}</span>
+<span>${item.price}</span>
+<button onclick="removeItem(${index})">❌</button>
+</div>`;
 });
-document.getElementById("totalPrice").innerText="المجموع: "+total+" ريال";
+document.getElementById("total").innerText=total;
 }
 
-function removeItem(i){
-total-=cart[i].price;
-cart.splice(i,1);
-updateCart();
+function removeItem(index){
+cart.splice(index,1);
+renderCart();
 }
 
 function toggleCart(){
-let c=document.getElementById("cart");
-c.style.display=c.style.display==="block"?"none":"block";
+document.getElementById("cart").classList.toggle("active");
 }
 
-function adminLogin(){
-let pass=prompt("أدخل كلمة المرور:");
-if(pass==="1234"){
-alert("تم الدخول");
-}else{
-alert("كلمة المرور خطأ");
-}
-}
 </script>
 
 </body>
