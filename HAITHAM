@@ -1,1 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وقفة</title>
 
+<style>
+body{
+    margin:0;
+    font-family:Tahoma;
+    background:#111; /* اسود مطفي */
+    color:white;
+}
+
+header{
+    background:#000;
+    padding:20px;
+    text-align:center;
+    font-size:28px;
+    color:gold;
+    position:relative;
+}
+
+.cart-btn{
+    position:absolute;
+    left:20px;
+    top:20px;
+    background:gold;
+    color:black;
+    border:none;
+    padding:8px 15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+nav{
+    background:#000;
+    text-align:center;
+    padding:10px;
+}
+
+nav a{
+    color:gold;
+    margin:10px;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.section{
+    padding:30px;
+    text-align:center;
+}
+
+h2{
+    color:gold;
+}
+
+.product{
+    border:2px solid gold;
+    padding:15px;
+    margin:15px;
+    display:inline-block;
+    width:200px;
+}
+
+.price{
+    color:gold;
+    font-weight:bold;
+}
+
+button{
+    background:gold;
+    color:black;
+    border:none;
+    padding:8px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+#cart{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:300px;
+    height:100%;
+    background:black;
+    border-right:3px solid gold;
+    padding:20px;
+    overflow:auto;
+}
+
+#cart h3{
+    color:gold;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    border-top:1px solid gold;
+    margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+وقفة
+<button class="cart-btn" onclick="toggleCart()">السلة</button>
+</header>
+
+<nav>
+<a onclick="showSection('pens')">أقلام</a>
+<a onclick="showSection('watches')">ساعات</a>
+<a onclick="showSection('rings')">خواتم</a>
+<a onclick="showSection('beads')">سبح</a>
+<a onclick="showSection('contact')">تواصل معنا</a>
+</nav>
+
+<div id="cart">
+<h3>السلة</h3>
+<ul id="cartItems"></ul>
+</div>
+
+<!-- الأقلام -->
+<div class="section" id="pens">
+<h2>أقلام كارتير سانتوس</h2>
+<div class="product">
+<p>قلم كارتير سانتوس</p>
+<p class="price">99 ريال</p>
+<button onclick="addToCart('قلم كارتير',99)">أضف للسلة</button>
+</div>
+</div>
+
+<!-- الساعات -->
+<div class="section" id="watches" style="display:none;">
+<h2>الساعات</h2>
+<div class="product">
+<p>ساعة كاسيو</p>
+<p class="price">120 ريال</p>
+<button onclick="addToCart('ساعة كاسيو',120)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<p>ساعة كارتير</p>
+<p class="price">120 ريال</p>
+<button onclick="addToCart('ساعة كارتير',120)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<p>ساعة روليكس</p>
+<p class="price">120 ريال</p>
+<button onclick="addToCart('ساعة روليكس',120)">أضف للسلة</button>
+</div>
+</div>
+
+<!-- الخواتم -->
+<div class="section" id="rings" style="display:none;">
+<h2>خواتم رجالية</h2>
+<div class="product">
+<p>خاتم رجالي</p>
+<p class="price">30 ريال</p>
+<button onclick="addToCart('خاتم رجالي',30)">أضف للسلة</button>
+</div>
+</div>
+
+<!-- السبح -->
+<div class="section" id="beads" style="display:none;">
+<h2>سبح بكلايت</h2>
+<div class="product">
+<p>سبحة بكلايت</p>
+<p class="price">45 ريال</p>
+<button onclick="addToCart('سبحة بكلايت',45)">أضف للسلة</button>
+</div>
+</div>
+
+<!-- تواصل معنا -->
+<div class="section" id="contact" style="display:none;">
+<h2>تواصل معنا</h2>
+<p>للتواصل عبر واتساب: 05xxxxxxxx</p>
+</div>
+
+<footer>
+جميع الحقوق محفوظة © وقفة
+</footer>
+
+<script>
+let cart = [];
+
+function addToCart(name,price){
+    cart.push(name + " - " + price + " ريال");
+    updateCart();
+}
+
+function updateCart(){
+    let list = document.getElementById("cartItems");
+    list.innerHTML="";
+    cart.forEach(item=>{
+        let li=document.createElement("li");
+        li.textContent=item;
+        list.appendChild(li);
+    });
+}
+
+function toggleCart(){
+    let cartBox=document.getElementById("cart");
+    cartBox.style.display = cartBox.style.display==="block" ? "none" : "block";
+}
+
+function showSection(id){
+    document.querySelectorAll(".section").forEach(sec=>{
+        sec.style.display="none";
+    });
+    document.getElementById(id).style.display="block";
+}
+</script>
+
+</body>
+</html>
