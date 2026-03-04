@@ -8,17 +8,17 @@
 <style>
 body{
     margin:0;
-    font-family:Tahoma;
-    background:#111; /* اسود مطفي */
+    font-family: "Tahoma", sans-serif;
+    background:#0b1c2d; /* كحلي */
     color:white;
 }
 
 header{
-    background:#000;
+    background:#081521;
     padding:20px;
     text-align:center;
     font-size:28px;
-    color:gold;
+    color:white;
     position:relative;
 }
 
@@ -26,22 +26,23 @@ header{
     position:absolute;
     left:20px;
     top:20px;
-    background:gold;
-    color:black;
+    background:white;
+    color:#0b1c2d;
     border:none;
     padding:8px 15px;
     cursor:pointer;
     font-weight:bold;
+    border-radius:8px;
 }
 
 nav{
-    background:#000;
+    background:#081521;
     text-align:center;
     padding:10px;
 }
 
 nav a{
-    color:gold;
+    color:white;
     margin:10px;
     text-decoration:none;
     font-weight:bold;
@@ -54,30 +55,32 @@ nav a{
 }
 
 h2{
-    color:gold;
+    color:white;
 }
 
 .product{
-    border:2px solid gold;
+    border:2px solid white;
     padding:15px;
     margin:15px;
     display:inline-block;
     width:200px;
+    border-radius:12px;
 }
 
 .price{
-    color:gold;
+    color:white;
     font-weight:bold;
 }
 
 button{
-    background:gold;
-    color:black;
+    background:white;
+    color:#0b1c2d;
     border:none;
     padding:8px;
     cursor:pointer;
     font-weight:bold;
     margin-top:10px;
+    border-radius:8px;
 }
 
 #cart{
@@ -87,21 +90,21 @@ button{
     left:0;
     width:300px;
     height:100%;
-    background:black;
-    border-right:3px solid gold;
+    background:#081521;
     padding:20px;
     overflow:auto;
+    border-right:2px solid white;
 }
 
 #cart h3{
-    color:gold;
+    color:white;
 }
 
 footer{
     text-align:center;
     padding:20px;
-    border-top:1px solid gold;
     margin-top:40px;
+    border-top:1px solid white;
 }
 </style>
 </head>
@@ -122,23 +125,41 @@ footer{
 </nav>
 
 <div id="cart">
+<button onclick="toggleCart()" style="float:left;">✕</button>
 <h3>السلة</h3>
 <ul id="cartItems"></ul>
+<h4 id="total"></h4>
+<button onclick="toggleCart()">متابعة التسوق</button>
 </div>
 
 <!-- الأقلام -->
 <div class="section" id="pens">
-<h2>أقلام كارتير سانتوس</h2>
+<h2>الأقلام</h2>
+
 <div class="product">
-<p>قلم كارتير سانتوس</p>
+<p>قلم كارتير</p>
 <p class="price">99 ريال</p>
 <button onclick="addToCart('قلم كارتير',99)">أضف للسلة</button>
 </div>
+
+<div class="product">
+<p>قلم مونت بلاك</p>
+<p class="price">99 ريال</p>
+<button onclick="addToCart('قلم مونت بلاك',99)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<p>قلم جي فنشي</p>
+<p class="price">99 ريال</p>
+<button onclick="addToCart('قلم جي فنشي',99)">أضف للسلة</button>
+</div>
+
 </div>
 
 <!-- الساعات -->
 <div class="section" id="watches" style="display:none;">
 <h2>الساعات</h2>
+
 <div class="product">
 <p>ساعة كاسيو</p>
 <p class="price">120 ريال</p>
@@ -156,32 +177,43 @@ footer{
 <p class="price">120 ريال</p>
 <button onclick="addToCart('ساعة روليكس',120)">أضف للسلة</button>
 </div>
+
 </div>
 
 <!-- الخواتم -->
 <div class="section" id="rings" style="display:none;">
 <h2>خواتم رجالية</h2>
+
 <div class="product">
 <p>خاتم رجالي</p>
 <p class="price">30 ريال</p>
 <button onclick="addToCart('خاتم رجالي',30)">أضف للسلة</button>
 </div>
+
 </div>
 
 <!-- السبح -->
 <div class="section" id="beads" style="display:none;">
-<h2>سبح بكلايت</h2>
+<h2>السبح</h2>
+
 <div class="product">
 <p>سبحة بكلايت</p>
 <p class="price">45 ريال</p>
 <button onclick="addToCart('سبحة بكلايت',45)">أضف للسلة</button>
 </div>
+
+<div class="product">
+<p>سبحة عظم جمل</p>
+<p class="price">45 ريال</p>
+<button onclick="addToCart('سبحة عظم جمل',45)">أضف للسلة</button>
 </div>
 
-<!-- تواصل معنا -->
+</div>
+
+<!-- تواصل -->
 <div class="section" id="contact" style="display:none;">
 <h2>تواصل معنا</h2>
-<p>للتواصل عبر واتساب: 05xxxxxxxx</p>
+<p>واتساب: 05xxxxxxxx</p>
 </div>
 
 <footer>
@@ -190,9 +222,11 @@ footer{
 
 <script>
 let cart = [];
+let total = 0;
 
 function addToCart(name,price){
     cart.push(name + " - " + price + " ريال");
+    total += price;
     updateCart();
 }
 
@@ -204,6 +238,7 @@ function updateCart(){
         li.textContent=item;
         list.appendChild(li);
     });
+    document.getElementById("total").innerText = "المجموع: " + total + " ريال";
 }
 
 function toggleCart(){
