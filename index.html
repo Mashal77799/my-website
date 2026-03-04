@@ -9,161 +9,272 @@
 body{
 margin:0;
 font-family:Tahoma;
-background:#0b1c2d;
+background:#0e1a2b;
 color:white;
 }
+
+/* صفحة البداية */
+#landing{
+height:100vh;
+background:url('landing.jpg') center/cover no-repeat;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+position:relative;
+}
+
+#landing::after{
+content:"";
+position:absolute;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.5);
+}
+
+#landingContent{
+position:relative;
+z-index:2;
+}
+
+#landing h1{
+font-size:48px;
+border-bottom:3px solid white;
+display:inline-block;
+padding-bottom:8px;
+margin-bottom:20px;
+}
+
+#enterBtn{
+padding:12px 30px;
+border-radius:25px;
+border:none;
+background:white;
+color:#0e1a2b;
+font-size:18px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* المتجر */
+#store{display:none;}
 
 header{
-background:#081521;
-padding:20px;
+background:#0b1624;
+padding:15px;
 text-align:center;
-font-size:30px;
-color:white;
-border-bottom:2px solid white;
+position:relative;
 }
 
-header span{
+header h2{
+display:inline-block;
 border-bottom:3px solid white;
 padding-bottom:5px;
 }
 
-.cart-btn, .admin-btn{
+.cart-btn,.admin-btn{
 position:absolute;
-top:20px;
+top:15px;
 background:white;
-color:#0b1c2d;
+color:#0e1a2b;
 border:none;
 padding:8px 15px;
+border-radius:25px;
 cursor:pointer;
-border-radius:8px;
 font-weight:bold;
 }
 
-.cart-btn{ left:20px; }
-.admin-btn{ right:20px; }
+.cart-btn{left:15px;}
+.admin-btn{right:15px;}
+
+nav{
+display:flex;
+justify-content:center;
+gap:15px;
+padding:15px;
+background:#0b1624;
+flex-wrap:wrap;
+}
+
+nav button{
+border-radius:30px;
+padding:10px 20px;
+border:none;
+background:white;
+color:#0e1a2b;
+cursor:pointer;
+font-weight:bold;
+}
 
 .section{
-padding:30px;
+display:none;
+padding:20px;
 text-align:center;
 }
 
 .product{
 border:2px solid white;
+border-radius:18px;
 padding:15px;
-margin:15px;
+margin:10px;
 display:inline-block;
 width:220px;
-border-radius:12px;
+background:#13243a;
 }
 
-.price{
-font-weight:bold;
+.product h4{
 margin:5px 0;
 }
 
-button{
-background:white;
-color:#0b1c2d;
-border:none;
-padding:8px;
-cursor:pointer;
-border-radius:8px;
-margin-top:5px;
+.price{
+color:white;
 font-weight:bold;
 }
 
-#cart, #adminPanel{
+button.add{
+margin-top:8px;
+border-radius:20px;
+padding:8px 15px;
+border:none;
+background:white;
+color:#0e1a2b;
+cursor:pointer;
+}
+
+/* السلة */
+#cart{
 display:none;
 position:fixed;
 top:0;
 left:0;
 width:320px;
 height:100%;
-background:#081521;
+background:#0b1624;
 padding:20px;
 overflow:auto;
-border-right:2px solid white;
+box-shadow:0 0 15px black;
 }
 
-input, select{
-width:100%;
-padding:6px;
-margin:5px 0;
-border-radius:6px;
+#cart h3{
+border-bottom:2px solid white;
+padding-bottom:5px;
+}
+
+#cart ul{
+list-style:none;
+padding:0;
+}
+
+#cart li{
+background:#13243a;
+margin:8px 0;
+padding:10px;
+border-radius:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.remove-btn{
+background:red;
+color:white;
 border:none;
+border-radius:50%;
+width:25px;
+height:25px;
+cursor:pointer;
 }
 
-h3{margin-top:0;}
+.total{
+margin-top:15px;
+font-weight:bold;
+}
 
 </style>
 </head>
 
 <body>
 
-<header>
-<span>وقفة</span>
-<button class="cart-btn" onclick="toggleCart()">السلة</button>
-<button class="admin-btn" onclick="adminLogin()">لوحة التحكم</button>
-</header>
-
-<div class="section" id="products"></div>
-
-<!-- السلة -->
-<div id="cart">
-<button onclick="toggleCart()">✕</button>
-<h3>السلة</h3>
-<ul id="cartItems"></ul>
-<h4 id="total"></h4>
+<div id="landing">
+<div id="landingContent">
+<h1>وقفة</h1>
+<br>
+<button id="enterBtn" onclick="enterStore()">دخول المتجر</button>
+</div>
 </div>
 
-<!-- لوحة التحكم -->
-<div id="adminPanel">
-<button onclick="toggleAdmin()">✕</button>
-<h3>لوحة التحكم</h3>
+<div id="store">
 
-<input type="text" id="pName" placeholder="اسم المنتج">
-<input type="number" id="pPrice" placeholder="السعر">
-<select id="pStatus">
-<option value="true">متوفر</option>
-<option value="false">غير متوفر</option>
-</select>
+<header>
+<h2>وقفة</h2>
+<button class="cart-btn" onclick="toggleCart()">السلة</button>
+<button class="admin-btn" onclick="adminLogin()">تحكم</button>
+</header>
 
-<button onclick="addProduct()">إضافة منتج</button>
-<button onclick="updateProduct()">تعديل المنتج المحدد</button>
-<button onclick="deleteProduct()">حذف المنتج المحدد</button>
+<nav>
+<button onclick="showSection('pens')">الأقلام</button>
+<button onclick="showSection('watches')">الساعات</button>
+<button onclick="showSection('rings')">الخواتم</button>
+<button onclick="showSection('beads')">السبح</button>
+</nav>
 
-<select id="productSelect"></select>
+<div id="pens" class="section"></div>
+<div id="watches" class="section"></div>
+<div id="rings" class="section"></div>
+<div id="beads" class="section"></div>
+
+</div>
+
+<div id="cart">
+<button onclick="toggleCart()">إغلاق</button>
+<h3>السلة</h3>
+<ul id="cartItems"></ul>
+<div class="total" id="totalPrice">المجموع: 0 ريال</div>
 </div>
 
 <script>
+
 let products=[
-{name:"قلم كارتير",price:99,available:true},
-{name:"قلم مونت بلاك",price:99,available:true},
-{name:"قلم جي فنشي",price:99,available:true},
-{name:"ساعة كاسيو",price:120,available:true},
-{name:"ساعة كارتير",price:120,available:true},
-{name:"ساعة روليكس",price:120,available:true},
-{name:"خاتم رجالي",price:30,available:true},
-{name:"سبحة بكلايت",price:45,available:true},
-{name:"سبحة عظم جمل",price:45,available:true}
+{cat:"pens",name:"قلم كارتير",price:99,available:true},
+{cat:"pens",name:"قلم مونت بلاك",price:99,available:true},
+{cat:"pens",name:"قلم جي فنشي",price:99,available:true},
+{cat:"watches",name:"ساعة كاسيو",price:120,available:true},
+{cat:"watches",name:"ساعة كارتير",price:120,available:true},
+{cat:"watches",name:"ساعة روليكس",price:120,available:true},
+{cat:"rings",name:"خاتم رجالي",price:30,available:true},
+{cat:"beads",name:"سبحة بكلايت",price:45,available:true},
+{cat:"beads",name:"سبحة عظم جمل",price:45,available:true}
 ];
 
 let cart=[];
 let total=0;
 
+function enterStore(){
+document.getElementById("landing").style.display="none";
+document.getElementById("store").style.display="block";
+showSection("pens");
+renderProducts();
+}
+
 function renderProducts(){
-let container=document.getElementById("products");
+["pens","watches","rings","beads"].forEach(cat=>{
+let container=document.getElementById(cat);
 container.innerHTML="";
-products.forEach((p,index)=>{
+products.filter(p=>p.cat===cat && p.available).forEach((p,i)=>{
 container.innerHTML+=`
 <div class="product">
-<p>${p.name}</p>
-<p class="price">${p.price} ريال</p>
-<p>${p.available?"متوفر":"غير متوفر"}</p>
-<button ${!p.available?"disabled":""} onclick="addToCart(${index})">أضف للسلة</button>
+<h4>${p.name}</h4>
+<div class="price">${p.price} ريال</div>
+<button class="add" onclick="addToCart(${products.indexOf(p)})">أضف للسلة</button>
 </div>`;
 });
-updateSelect();
+});
+}
+
+function showSection(id){
+document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="block";
 }
 
 function addToCart(i){
@@ -176,13 +287,16 @@ function updateCart(){
 let list=document.getElementById("cartItems");
 list.innerHTML="";
 cart.forEach((item,index)=>{
-list.innerHTML+=`<li>${item.name} - ${item.price} ريال 
-<button onclick="removeFromCart(${index})">❌</button></li>`;
+list.innerHTML+=`
+<li>
+${item.name} - ${item.price}
+<button class="remove-btn" onclick="removeItem(${index})">×</button>
+</li>`;
 });
-document.getElementById("total").innerText="المجموع: "+total+" ريال";
+document.getElementById("totalPrice").innerText="المجموع: "+total+" ريال";
 }
 
-function removeFromCart(i){
+function removeItem(i){
 total-=cart[i].price;
 cart.splice(i,1);
 updateCart();
@@ -196,47 +310,12 @@ c.style.display=c.style.display==="block"?"none":"block";
 function adminLogin(){
 let pass=prompt("أدخل كلمة المرور:");
 if(pass==="1234"){
-document.getElementById("adminPanel").style.display="block";
+alert("تم الدخول (تقدر تطور لوحة التحكم لاحقاً)");
+}else{
+alert("كلمة المرور خطأ");
 }
 }
 
-function toggleAdmin(){
-document.getElementById("adminPanel").style.display="none";
-}
-
-function addProduct(){
-let n=document.getElementById("pName").value;
-let pr=parseInt(document.getElementById("pPrice").value);
-let st=document.getElementById("pStatus").value==="true";
-if(n && pr){
-products.push({name:n,price:pr,available:st});
-renderProducts();
-}
-}
-
-function updateProduct(){
-let i=document.getElementById("productSelect").value;
-products[i].name=document.getElementById("pName").value;
-products[i].price=parseInt(document.getElementById("pPrice").value);
-products[i].available=document.getElementById("pStatus").value==="true";
-renderProducts();
-}
-
-function deleteProduct(){
-let i=document.getElementById("productSelect").value;
-products.splice(i,1);
-renderProducts();
-}
-
-function updateSelect(){
-let select=document.getElementById("productSelect");
-select.innerHTML="";
-products.forEach((p,i)=>{
-select.innerHTML+=`<option value="${i}">${p.name}</option>`;
-});
-}
-
-renderProducts();
 </script>
 
 </body>
