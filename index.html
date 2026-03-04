@@ -7,251 +7,236 @@
 
 <style>
 body{
-    margin:0;
-    font-family: "Tahoma", sans-serif;
-    background:#0b1c2d; /* كحلي */
-    color:white;
+margin:0;
+font-family:Tahoma;
+background:#0b1c2d;
+color:white;
 }
 
 header{
-    background:#081521;
-    padding:20px;
-    text-align:center;
-    font-size:28px;
-    color:white;
-    position:relative;
+background:#081521;
+padding:20px;
+text-align:center;
+font-size:30px;
+color:white;
+border-bottom:2px solid white;
 }
 
-.cart-btn{
-    position:absolute;
-    left:20px;
-    top:20px;
-    background:white;
-    color:#0b1c2d;
-    border:none;
-    padding:8px 15px;
-    cursor:pointer;
-    font-weight:bold;
-    border-radius:8px;
+header span{
+border-bottom:3px solid white;
+padding-bottom:5px;
 }
 
-nav{
-    background:#081521;
-    text-align:center;
-    padding:10px;
+.cart-btn, .admin-btn{
+position:absolute;
+top:20px;
+background:white;
+color:#0b1c2d;
+border:none;
+padding:8px 15px;
+cursor:pointer;
+border-radius:8px;
+font-weight:bold;
 }
 
-nav a{
-    color:white;
-    margin:10px;
-    text-decoration:none;
-    font-weight:bold;
-    cursor:pointer;
-}
+.cart-btn{ left:20px; }
+.admin-btn{ right:20px; }
 
 .section{
-    padding:30px;
-    text-align:center;
-}
-
-h2{
-    color:white;
+padding:30px;
+text-align:center;
 }
 
 .product{
-    border:2px solid white;
-    padding:15px;
-    margin:15px;
-    display:inline-block;
-    width:200px;
-    border-radius:12px;
+border:2px solid white;
+padding:15px;
+margin:15px;
+display:inline-block;
+width:220px;
+border-radius:12px;
 }
 
 .price{
-    color:white;
-    font-weight:bold;
+font-weight:bold;
+margin:5px 0;
 }
 
 button{
-    background:white;
-    color:#0b1c2d;
-    border:none;
-    padding:8px;
-    cursor:pointer;
-    font-weight:bold;
-    margin-top:10px;
-    border-radius:8px;
+background:white;
+color:#0b1c2d;
+border:none;
+padding:8px;
+cursor:pointer;
+border-radius:8px;
+margin-top:5px;
+font-weight:bold;
 }
 
-#cart{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:300px;
-    height:100%;
-    background:#081521;
-    padding:20px;
-    overflow:auto;
-    border-right:2px solid white;
+#cart, #adminPanel{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:320px;
+height:100%;
+background:#081521;
+padding:20px;
+overflow:auto;
+border-right:2px solid white;
 }
 
-#cart h3{
-    color:white;
+input, select{
+width:100%;
+padding:6px;
+margin:5px 0;
+border-radius:6px;
+border:none;
 }
 
-footer{
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
-    border-top:1px solid white;
-}
+h3{margin-top:0;}
+
 </style>
 </head>
 
 <body>
 
 <header>
-وقفة
+<span>وقفة</span>
 <button class="cart-btn" onclick="toggleCart()">السلة</button>
+<button class="admin-btn" onclick="adminLogin()">لوحة التحكم</button>
 </header>
 
-<nav>
-<a onclick="showSection('pens')">أقلام</a>
-<a onclick="showSection('watches')">ساعات</a>
-<a onclick="showSection('rings')">خواتم</a>
-<a onclick="showSection('beads')">سبح</a>
-<a onclick="showSection('contact')">تواصل معنا</a>
-</nav>
+<div class="section" id="products"></div>
 
+<!-- السلة -->
 <div id="cart">
-<button onclick="toggleCart()" style="float:left;">✕</button>
+<button onclick="toggleCart()">✕</button>
 <h3>السلة</h3>
 <ul id="cartItems"></ul>
 <h4 id="total"></h4>
-<button onclick="toggleCart()">متابعة التسوق</button>
 </div>
 
-<!-- الأقلام -->
-<div class="section" id="pens">
-<h2>الأقلام</h2>
+<!-- لوحة التحكم -->
+<div id="adminPanel">
+<button onclick="toggleAdmin()">✕</button>
+<h3>لوحة التحكم</h3>
 
-<div class="product">
-<p>قلم كارتير</p>
-<p class="price">99 ريال</p>
-<button onclick="addToCart('قلم كارتير',99)">أضف للسلة</button>
+<input type="text" id="pName" placeholder="اسم المنتج">
+<input type="number" id="pPrice" placeholder="السعر">
+<select id="pStatus">
+<option value="true">متوفر</option>
+<option value="false">غير متوفر</option>
+</select>
+
+<button onclick="addProduct()">إضافة منتج</button>
+<button onclick="updateProduct()">تعديل المنتج المحدد</button>
+<button onclick="deleteProduct()">حذف المنتج المحدد</button>
+
+<select id="productSelect"></select>
 </div>
-
-<div class="product">
-<p>قلم مونت بلاك</p>
-<p class="price">99 ريال</p>
-<button onclick="addToCart('قلم مونت بلاك',99)">أضف للسلة</button>
-</div>
-
-<div class="product">
-<p>قلم جي فنشي</p>
-<p class="price">99 ريال</p>
-<button onclick="addToCart('قلم جي فنشي',99)">أضف للسلة</button>
-</div>
-
-</div>
-
-<!-- الساعات -->
-<div class="section" id="watches" style="display:none;">
-<h2>الساعات</h2>
-
-<div class="product">
-<p>ساعة كاسيو</p>
-<p class="price">120 ريال</p>
-<button onclick="addToCart('ساعة كاسيو',120)">أضف للسلة</button>
-</div>
-
-<div class="product">
-<p>ساعة كارتير</p>
-<p class="price">120 ريال</p>
-<button onclick="addToCart('ساعة كارتير',120)">أضف للسلة</button>
-</div>
-
-<div class="product">
-<p>ساعة روليكس</p>
-<p class="price">120 ريال</p>
-<button onclick="addToCart('ساعة روليكس',120)">أضف للسلة</button>
-</div>
-
-</div>
-
-<!-- الخواتم -->
-<div class="section" id="rings" style="display:none;">
-<h2>خواتم رجالية</h2>
-
-<div class="product">
-<p>خاتم رجالي</p>
-<p class="price">30 ريال</p>
-<button onclick="addToCart('خاتم رجالي',30)">أضف للسلة</button>
-</div>
-
-</div>
-
-<!-- السبح -->
-<div class="section" id="beads" style="display:none;">
-<h2>السبح</h2>
-
-<div class="product">
-<p>سبحة بكلايت</p>
-<p class="price">45 ريال</p>
-<button onclick="addToCart('سبحة بكلايت',45)">أضف للسلة</button>
-</div>
-
-<div class="product">
-<p>سبحة عظم جمل</p>
-<p class="price">45 ريال</p>
-<button onclick="addToCart('سبحة عظم جمل',45)">أضف للسلة</button>
-</div>
-
-</div>
-
-<!-- تواصل -->
-<div class="section" id="contact" style="display:none;">
-<h2>تواصل معنا</h2>
-<p>واتساب: 05xxxxxxxx</p>
-</div>
-
-<footer>
-جميع الحقوق محفوظة © وقفة
-</footer>
 
 <script>
-let cart = [];
-let total = 0;
+let products=[
+{name:"قلم كارتير",price:99,available:true},
+{name:"قلم مونت بلاك",price:99,available:true},
+{name:"قلم جي فنشي",price:99,available:true},
+{name:"ساعة كاسيو",price:120,available:true},
+{name:"ساعة كارتير",price:120,available:true},
+{name:"ساعة روليكس",price:120,available:true},
+{name:"خاتم رجالي",price:30,available:true},
+{name:"سبحة بكلايت",price:45,available:true},
+{name:"سبحة عظم جمل",price:45,available:true}
+];
 
-function addToCart(name,price){
-    cart.push(name + " - " + price + " ريال");
-    total += price;
-    updateCart();
+let cart=[];
+let total=0;
+
+function renderProducts(){
+let container=document.getElementById("products");
+container.innerHTML="";
+products.forEach((p,index)=>{
+container.innerHTML+=`
+<div class="product">
+<p>${p.name}</p>
+<p class="price">${p.price} ريال</p>
+<p>${p.available?"متوفر":"غير متوفر"}</p>
+<button ${!p.available?"disabled":""} onclick="addToCart(${index})">أضف للسلة</button>
+</div>`;
+});
+updateSelect();
+}
+
+function addToCart(i){
+cart.push(products[i]);
+total+=products[i].price;
+updateCart();
 }
 
 function updateCart(){
-    let list = document.getElementById("cartItems");
-    list.innerHTML="";
-    cart.forEach(item=>{
-        let li=document.createElement("li");
-        li.textContent=item;
-        list.appendChild(li);
-    });
-    document.getElementById("total").innerText = "المجموع: " + total + " ريال";
+let list=document.getElementById("cartItems");
+list.innerHTML="";
+cart.forEach((item,index)=>{
+list.innerHTML+=`<li>${item.name} - ${item.price} ريال 
+<button onclick="removeFromCart(${index})">❌</button></li>`;
+});
+document.getElementById("total").innerText="المجموع: "+total+" ريال";
+}
+
+function removeFromCart(i){
+total-=cart[i].price;
+cart.splice(i,1);
+updateCart();
 }
 
 function toggleCart(){
-    let cartBox=document.getElementById("cart");
-    cartBox.style.display = cartBox.style.display==="block" ? "none" : "block";
+let c=document.getElementById("cart");
+c.style.display=c.style.display==="block"?"none":"block";
 }
 
-function showSection(id){
-    document.querySelectorAll(".section").forEach(sec=>{
-        sec.style.display="none";
-    });
-    document.getElementById(id).style.display="block";
+function adminLogin(){
+let pass=prompt("أدخل كلمة المرور:");
+if(pass==="1234"){
+document.getElementById("adminPanel").style.display="block";
 }
+}
+
+function toggleAdmin(){
+document.getElementById("adminPanel").style.display="none";
+}
+
+function addProduct(){
+let n=document.getElementById("pName").value;
+let pr=parseInt(document.getElementById("pPrice").value);
+let st=document.getElementById("pStatus").value==="true";
+if(n && pr){
+products.push({name:n,price:pr,available:st});
+renderProducts();
+}
+}
+
+function updateProduct(){
+let i=document.getElementById("productSelect").value;
+products[i].name=document.getElementById("pName").value;
+products[i].price=parseInt(document.getElementById("pPrice").value);
+products[i].available=document.getElementById("pStatus").value==="true";
+renderProducts();
+}
+
+function deleteProduct(){
+let i=document.getElementById("productSelect").value;
+products.splice(i,1);
+renderProducts();
+}
+
+function updateSelect(){
+let select=document.getElementById("productSelect");
+select.innerHTML="";
+products.forEach((p,i)=>{
+select.innerHTML+=`<option value="${i}">${p.name}</option>`;
+});
+}
+
+renderProducts();
 </script>
 
 </body>
