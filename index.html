@@ -21,25 +21,25 @@ font-size:55px;
 }
 
 .main-line{
-width:250px;
+width:260px;
 height:4px;
 background:white;
 margin:15px auto 40px auto;
 border-radius:5px;
 }
 
-/* الأقسام */
+/* الأقسام أفقية */
 .categories{
 display:flex;
 justify-content:center;
-gap:25px;
+gap:20px;
 flex-wrap:wrap;
 margin-bottom:40px;
 }
 
 .cat{
-width:120px;
-height:120px;
+width:110px;
+height:110px;
 border-radius:50%;
 background:white;
 color:#0f172a;
@@ -74,11 +74,13 @@ margin:10px 0;
 font-weight:bold;
 }
 
+/* أزرار عامة */
 button{
 padding:8px 15px;
 border-radius:20px;
 border:none;
 cursor:pointer;
+margin:5px;
 }
 
 /* السلة */
@@ -86,7 +88,7 @@ cursor:pointer;
 position:fixed;
 top:0;
 left:-100%;
-width:320px;
+width:330px;
 height:100%;
 background:#1e293b;
 padding:20px;
@@ -113,7 +115,7 @@ margin-top:15px;
 font-weight:bold;
 }
 
-.cart-btn, .admin-btn{
+.top-btn{
 position:fixed;
 top:15px;
 background:white;
@@ -125,15 +127,29 @@ font-weight:bold;
 }
 
 .cart-btn{left:15px;}
-.admin-btn{right:15px;}
+.login-btn{right:15px;}
 
+.admin-panel{
+background:#111827;
+padding:15px;
+margin:20px;
+border-radius:15px;
+display:none;
+}
+
+input{
+padding:6px;
+border-radius:10px;
+border:none;
+margin:4px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="cart-btn" onclick="toggleCart()">🛒</div>
-<div class="admin-btn" onclick="admin()">تحكم</div>
+<div class="top-btn cart-btn" onclick="toggleCart()">🛒</div>
+<div class="top-btn login-btn" onclick="toggleLogin()">تسجيل</div>
 
 <h1 class="main-title">وقفة</h1>
 <div class="main-line"></div>
@@ -147,14 +163,39 @@ font-weight:bold;
 
 <div class="products" id="products"></div>
 
+<!-- السلة -->
 <div class="cart" id="cart">
 <h3>السلة</h3>
 <div id="cartItems"></div>
+<div id="removeAll"></div>
 <div class="total">المجموع: <span id="total">0</span> ريال</div>
 <button onclick="toggleCart()">إغلاق</button>
 </div>
 
+<!-- لوحة التحكم -->
+<div class="admin-panel" id="adminPanel">
+<h3>لوحة التحكم</h3>
+
+<input id="catInput" placeholder="الفئة pens مثلا">
+<input id="nameInput" placeholder="اسم المنتج">
+<input id="priceInput" placeholder="السعر">
+<button onclick="addProduct()">إضافة</button>
+
+<br>
+
+<input id="editCat" placeholder="الفئة">
+<input id="editIndex" placeholder="رقم المنتج يبدأ من 0">
+<input id="editPrice" placeholder="السعر الجديد">
+<button onclick="editPrice()">تغيير السعر</button>
+
+<button onclick="toggleAvailability()">تغيير التوفر</button>
+<button onclick="logout()">تسجيل خروج</button>
+</div>
+
 <script>
+
+let currentUser = localStorage.getItem("user") || null;
+
 let products = JSON.parse(localStorage.getItem("products")) || {
 pens:[
 {name:"قلم كارتير",price:99,available:true},
@@ -181,6 +222,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 function save(){
 localStorage.setItem("products",JSON.stringify(products));
 localStorage.setItem("cart",JSON.stringify(cart));
+localStorage.setItem("user",currentUser);
 }
 
 function show(cat){
@@ -206,6 +248,7 @@ function renderCart(){
 let container=document.getElementById("cartItems");
 container.innerHTML="";
 let total=0;
+
 cart.forEach((item,index)=>{
 total+=item.price;
 container.innerHTML+=`
@@ -215,7 +258,16 @@ container.innerHTML+=`
 <button onclick="removeItem(${index})">❌</button>
 </div>`;
 });
+
 document.getElementById("total").innerText=total;
+
+if(cart.length>=4){
+document.getElementById("removeAll").innerHTML=
+`<button onclick="clearCart()">إزالة الكل</button>`;
+}else{
+document.getElementById("removeAll").innerHTML="";
+}
+
 save();
 }
 
@@ -224,37 +276,64 @@ cart.splice(i,1);
 renderCart();
 }
 
+function clearCart(){
+cart=[];
+renderCart();
+}
+
 function toggleCart(){
 document.getElementById("cart").classList.toggle("active");
 }
 
-function admin(){
-let pass=prompt("أدخل كلمة المرور:");
-if(pass==="1234"){
-let action=prompt("1- إضافة منتج\n2- تعديل سعر\n3- تغيير توفر");
-if(action=="1"){
-let cat=prompt("الفئة؟ pens/watches/rings/beads");
-let name=prompt("اسم المنتج:");
-let price=parseInt(prompt("السعر:"));
-products[cat].push({name:name,price:price,available:true});
-}
-if(action=="2"){
-let cat=prompt("الفئة؟");
-let index=prompt("رقم المنتج يبدأ من 0");
-let newPrice=parseInt(prompt("السعر الجديد:"));
-products[cat][index].price=newPrice;
-}
-if(action=="3"){
-let cat=prompt("الفئة؟");
-let index=prompt("رقم المنتج يبدأ من 0");
-products[cat][index].available=!products[cat][index].available;
+/* تسجيل الدخول */
+function toggleLogin(){
+let user=prompt("اسم المستخدم:");
+let pass=prompt("كلمة المرور:");
+
+if(user==="admin" && pass==="1234"){
+currentUser="admin";
+document.getElementById("adminPanel").style.display="block";
+alert("تم الدخول كأدمن");
 }
 save();
-alert("تم التحديث");
 }
+
+function logout(){
+currentUser=null;
+document.getElementById("adminPanel").style.display="none";
+save();
+alert("تم تسجيل الخروج");
+}
+
+/* لوحة التحكم */
+function addProduct(){
+let c=document.getElementById("catInput").value;
+let n=document.getElementById("nameInput").value;
+let p=parseInt(document.getElementById("priceInput").value);
+products[c].push({name:n,price:p,available:true});
+save();
+alert("تمت الإضافة");
+}
+
+function editPrice(){
+let c=document.getElementById("editCat").value;
+let i=document.getElementById("editIndex").value;
+let p=parseInt(document.getElementById("editPrice").value);
+products[c][i].price=p;
+save();
+alert("تم تغيير السعر");
+}
+
+function toggleAvailability(){
+let c=document.getElementById("editCat").value;
+let i=document.getElementById("editIndex").value;
+products[c][i].available=!products[c][i].available;
+save();
+alert("تم تغيير التوفر");
 }
 
 renderCart();
+
 </script>
 
 </body>
