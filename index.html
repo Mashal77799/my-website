@@ -3,189 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>وقفة</title>
+<title>موقع السيرفر</title>
 
 <style>
-body{margin:0;font-family:Tahoma;background:#0f172a;color:#fff}
+body{
+margin:0;
+font-family:Tahoma;
+background:#140000;
+color:#fff;
+}
 
-/* ===== الصفحة الأولى ===== */
-.welcome{
+/* ===== صفحة الدخول ===== */
+.login-page{
 height:100vh;
-background:url("IMG_2277.png") center/cover no-repeat;
-display:flex;align-items:center;justify-content:center;
-}
-.welcome button{
-padding:20px 60px;font-size:28px;
-border-radius:25px;border:none;
-background:rgba(0,0,0,.7);color:#fff;
-cursor:pointer
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#2b0000,#140000);
 }
 
-/* ===== صفحة وقفة ===== */
-.landing{
-display:none;height:100vh;
-display:flex;align-items:center;
-justify-content:center;flex-direction:column
-}
-.title{font-size:65px;margin:0}
-.line{width:300px;height:4px;background:#fff;margin:15px 0 30px;border-radius:6px}
-.enter-btn{
-padding:12px 40px;border-radius:20px;
-border:none;background:#fff;color:#0f172a;
-font-weight:bold;cursor:pointer
+.login-box{
+background:#1e0000;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px #ff0000;
+text-align:center;
+width:300px;
 }
 
-/* ===== المتجر ===== */
-#store{display:none}
-.header{text-align:center;margin-top:40px}
-.header-line{width:200px;height:4px;background:#fff;margin:10px auto 30px;border-radius:6px}
-
-.categories{
-display:flex;justify-content:center;
-gap:20px;margin-bottom:30px;flex-wrap:wrap
-}
-.cat{
-width:160px;height:55px;background:#fff;color:#0f172a;
-display:flex;align-items:center;justify-content:center;
-border-radius:18px;font-weight:bold;
-cursor:pointer;transition:.2s
-}
-.cat:hover{transform:scale(1.05)}
-
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;padding:20px
-}
-.product{
-background:#111827;border:2px solid #fff;
-border-radius:20px;padding:15px;text-align:center
+.login-box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+border:none;
 }
 
-.price{margin:8px 0;font-weight:bold}
-.btn{
-padding:6px 14px;border:none;
-border-radius:18px;cursor:pointer;margin:3px
-}
-.btn-white{background:#fff;color:#0f172a}
-.btn-danger{background:#dc2626;color:#fff}
-
-/* ===== السلة ===== */
-.cart{
-position:fixed;left:-100%;top:0;
-width:350px;height:100%;
-background:#1e293b;padding:20px;
-overflow:auto;transition:.3s
-}
-.cart.active{left:0}
-.cart-item{
-background:#0f172a;padding:10px;
-border-radius:16px;margin:8px 0
-}
-.qty{display:flex;justify-content:center;gap:8px;margin-top:5px}
-.total{margin-top:15px;font-weight:bold}
-
-/* ===== الدفع ===== */
-.checkout{
-display:none;padding:30px;
-max-width:500px;margin:auto
-}
-.checkout input{
-width:100%;padding:8px;margin:8px 0;
-border-radius:15px;border:none
-}
-.checkout button{
-width:100%;padding:10px;border-radius:20px;
-border:none;background:#fff;color:#0f172a;
-font-weight:bold;cursor:pointer
+.login-box button{
+width:100%;
+padding:10px;
+background:#ff1a1a;
+border:none;
+border-radius:12px;
+color:#fff;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 0 15px #ff0000;
 }
 
-/* ===== لوحة التحكم ===== */
-.admin{
-position:fixed;right:-100%;top:0;
-width:380px;height:100%;
-background:#0b1220;padding:20px;
-overflow:auto;transition:.3s
+/* ===== الصفحة الرئيسية ===== */
+#main{
+display:none;
+min-height:100vh;
+padding:40px;
+text-align:center;
 }
-.admin.active{right:0}
-.admin-box{
-background:#111827;padding:10px;
-border-radius:15px;margin:10px 0
+
+.cards{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-top:50px;
 }
-.admin input,.admin select{
-width:100%;padding:6px;
-border-radius:12px;border:none;margin:4px 0
+
+.card{
+width:260px;
+height:150px;
+background:#1e0000;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 0 25px #ff0000;
+transition:.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 40px #ff3333;
+}
+
+/* لوحة التحكم */
+.admin-panel{
+position:fixed;
+left:-100%;
+top:0;
+width:350px;
+height:100%;
+background:#220000;
+padding:20px;
+transition:.4s;
+overflow:auto;
+box-shadow:0 0 40px #ff0000;
+}
+
+.admin-panel.active{
+left:0;
+}
+
+.admin-panel input{
+width:100%;
+padding:8px;
+margin:6px 0;
+border-radius:8px;
+border:none;
+}
+
+.admin-panel button{
+width:100%;
+padding:8px;
+margin-top:6px;
+border:none;
+border-radius:10px;
+background:#ff1a1a;
+color:#fff;
+cursor:pointer;
 }
 </style>
 </head>
+
 <body>
 
-<!-- الصفحة الأولى -->
-<div class="welcome" id="welcome">
-<button onclick="goLanding()">الدخول</button>
+<!-- صفحة الدخول -->
+<div class="login-page" id="loginPage">
+<div class="login-box">
+<h2>دخول</h2>
+<input type="text" id="username" placeholder="اسم المستخدم">
+<input type="password" id="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+</div>
 </div>
 
-<!-- وقفة -->
-<div class="landing" id="landing">
-<h1 class="title">وقفة</h1>
-<div class="line"></div>
-<button class="enter-btn" onclick="enterStore()">دخول المتجر</button>
+<!-- الصفحة الرئيسية -->
+<div id="main">
+<h1>لوحة السيرفر</h1>
+
+<div style="margin-top:20px">
+<button onclick="toggleAdmin()" style="padding:8px 20px;background:#ff1a1a;border:none;border-radius:10px;color:#fff;cursor:pointer">لوحة التحكم</button>
 </div>
 
-<!-- المتجر -->
-<div id="store">
-<div class="header">
-<h1>وقفة</h1>
-<div class="header-line"></div>
+<div class="cards" id="cards"></div>
 </div>
 
-<div style="text-align:center;margin-bottom:20px">
-<button class="btn btn-white" onclick="toggleCart()">السلة</button>
-<button class="btn btn-white" onclick="login()">تسجيل</button>
-<button class="btn btn-white" onclick="toggleAdmin()">لوحة التحكم</button>
-</div>
+<!-- لوحة التحكم -->
+<div class="admin-panel" id="adminPanel">
+<h2>لوحة التحكم</h2>
 
-<div class="categories">
-<div class="cat" onclick="show('pens')">أقلام</div>
-<div class="cat" onclick="show('beads')">سبحات</div>
-<div class="cat" onclick="show('watches')">ساعات</div>
-<div class="cat" onclick="show('rings')">خواتم</div>
-</div>
+<label>اسم المسؤول الأول</label>
+<input type="text" id="admin1">
 
-<div class="products" id="products"></div>
+<label>اسم المسؤول الثاني</label>
+<input type="text" id="admin2">
+
+<label>رابط التفعيل (دسكورد)</label>
+<input type="text" id="discordLink">
+
+<button onclick="saveSettings()">حفظ</button>
 </div>
 
 <script>
-let user=localStorage.getItem("user");
-let products=JSON.parse(localStorage.getItem("products"))||{
-pens:[{name:"قلم فاخر",price:90,available:true}],
-beads:[{name:"سبحة كلاسيك",price:50,available:true}],
-watches:[{name:"ساعة رجالية",price:150,available:true}],
-rings:[{name:"خاتم فضة",price:70,available:true}]
+let settings = JSON.parse(localStorage.getItem("serverSettings")) || {
+admin1:"الرشيدي",
+admin2:"قوست",
+discord:"https://discord.com/channels/ضع_رابطك"
 };
-function save(){localStorage.setItem("products",JSON.stringify(products));}
-function goLanding(){welcome.style.display="none";landing.style.display="flex";}
-function enterStore(){landing.style.display="none";store.style.display="block";}
-function show(cat){
-let box=document.getElementById("products");
-box.innerHTML="";
-products[cat].forEach((p,i)=>{
-box.innerHTML+=`
-<div class="product">
-<h3>${p.name}</h3>
-<div class="price">${p.price} ريال</div>
-${p.available?`<button class="btn btn-white">عرض</button>`:`<div style="color:red">غير متوفر</div>`}
-</div>`;
-});
+
+function render(){
+let box=document.getElementById("cards");
+box.innerHTML=`
+<div class="card">${settings.admin1}</div>
+<div class="card">${settings.admin2}</div>
+<div class="card" onclick="activate()">التفعيل</div>
+`;
 }
+
 function login(){
-let u=prompt("اسم المستخدم:");
-let p=prompt("كلمة المرور:");
-if(u==="admin"&&p==="1234"){user="admin";alert("تم الدخول");}
+let u=document.getElementById("username").value;
+let p=document.getElementById("password").value;
+
+if(u==="admin" && p==="1234"){
+document.getElementById("loginPage").style.display="none";
+document.getElementById("main").style.display="block";
+render();
+}else{
+alert("بيانات خاطئة");
 }
+}
+
 function toggleAdmin(){
-if(user!=="admin"){alert("سجل دخول كأدمن");return;}
-alert("لوحة التحكم شغالة");
+document.getElementById("adminPanel").classList.toggle("active");
+document.getElementById("admin1").value=settings.admin1;
+document.getElementById("admin2").value=settings.admin2;
+document.getElementById("discordLink").value=settings.discord;
+}
+
+function saveSettings(){
+settings.admin1=document.getElementById("admin1").value;
+settings.admin2=document.getElementById("admin2").value;
+settings.discord=document.getElementById("discordLink").value;
+localStorage.setItem("serverSettings",JSON.stringify(settings));
+render();
+alert("تم الحفظ");
+}
+
+function activate(){
+window.location.href=settings.discord;
 }
 </script>
 
